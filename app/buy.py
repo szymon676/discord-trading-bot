@@ -20,16 +20,19 @@ async def buy_q(interaction: discord.Interaction):
    
     user = interaction.user.id
     
-    money = float(r.get(user))
-
+   
     if r.get(user) == None: 
-        r.set(user,500)
 
+        r.set(user,500)
+        money = float(r.get(user))
         qnt = money/price
+
         r.set(user,qnt)
 
     elif float(r.get(user)) > 30:
-        
+
+        money = float(r.get(user))
+     
         qnt = money / price
         r.set(user,qnt)
 
