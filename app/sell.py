@@ -1,6 +1,7 @@
 import redis 
 import yfinance as yf
 import discord
+import math
 from discord.ext import commands
 from discord import app_commands
 
@@ -29,4 +30,4 @@ async def sell_q(interaction: discord.Interaction):
         money = qnt * price
 
         r.set(user,money)
-        await interaction.response.send_message("your current balance is " + str(money) + "$")
+        await interaction.response.send_message("your current balance is " + str(math.ceil(money)) + "$")

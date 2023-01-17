@@ -1,6 +1,7 @@
 import redis
 import yfinance as yf
 import discord
+import math
 from discord import app_commands
 from discord.ext import commands
 

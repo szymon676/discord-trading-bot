@@ -17,6 +17,6 @@ async def get_balance(interaction:discord.Interaction):
     if math.ceil(float(r.get(user))) < 20:
         await interaction.response.send_message("your Qnt is " +str(balance)) 
     elif math.ceil(float(r.get(user))) > 20:
-        await interaction.response.send_message("your balance is " + str(balance))
+        await interaction.response.send_message("your balance is " + str(math.ceil(balance)))
     else:
         await interaction.response.send_message("you haven't bought anything yet")
