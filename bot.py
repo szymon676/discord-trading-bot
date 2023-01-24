@@ -23,7 +23,6 @@ async def on_ready():
     await client.change_presence(status=discord.Status.idle,activity = discord.Game(name=f"Quant Price: {price}$"))
     
 
-
 @client.tree.command(name="hello",description="say hello")
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message("hello")
@@ -32,4 +31,5 @@ async def hello(interaction: discord.Interaction):
 client.tree.add_command(buy_q)
 client.tree.add_command(sell_q)
 client.tree.add_command(get_balance)
+
 client.run(token)
