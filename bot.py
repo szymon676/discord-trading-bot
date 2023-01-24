@@ -32,4 +32,5 @@ client.tree.add_command(buy_q)
 client.tree.add_command(sell_q)
 client.tree.add_command(get_balance)
 
+
 client.run(token)

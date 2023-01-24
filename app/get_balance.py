@@ -13,10 +13,10 @@ client = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 async def get_balance(interaction:discord.Interaction):
 
     user = interaction.user.id
-    balance  = float(r.get(user))
-    if math.ceil(float(r.get(user))) < 20:
-        await interaction.response.send_message("your Qnt is " +str(balance)) 
-    elif math.ceil(float(r.get(user))) > 20:
-        await interaction.response.send_message("your balance is " + str(math.ceil(balance)))
-    elif r.get(user) == None:
+    money = float(r.hget(user,"money"))
+    qnt = float(r.hget(user,"quant"))
+
+    await interaction.response.send_message(f"now you have {str(money)}$ and {str(qnt)} qnt ")  
+    
+    if r.hget(user) == None:
         await interaction.response.send_message("your account is clear")

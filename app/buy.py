@@ -1,7 +1,6 @@
 import redis
 import yfinance as yf
 import discord
-import math
 from discord import app_commands
 from discord.ext import commands
 
@@ -22,6 +21,8 @@ async def buy_q(interaction: discord.Interaction,cash:int):
     
     qnt = cash / price
 
+
+
     if r.hget(user) == None:
 
         r.hset(user,"quant",qnt,"money",500-cash)
@@ -29,7 +30,7 @@ async def buy_q(interaction: discord.Interaction,cash:int):
         await interaction.response.send_message("now you have " + str(r.hget(user,"money") + "$"))
         
 
-    elif float(r.hget(user,"money")) == 0 :
+    elif float(r.hget(user,"money")) == 0 or cash > r.hget(user,"money") :
 
         await interaction.response.send_message("you don't have enough money")
 
@@ -43,27 +44,3 @@ async def buy_q(interaction: discord.Interaction,cash:int):
         await interaction.response.send_message("now you have " + str(r.hget(user,"money") + "$"))
 
         
-
-
-
-
-
-   
-    #if r.get(user) == None: 
-#
-    #    r.set(user,500)
-    #    money = float(r.get(user))
-    #    qnt = money/price
-#
-    #    r.set(user,qnt)
-#
-    #elif float(r.get(user)) > 30:
-#
-    #    money = float(r.get(user))
-    # 
-    #    qnt = money / price
-    #    r.set(user,qnt)
-#
-    #    await interaction.response.send_message("you bought " + str(qnt) + " Qnt" )
-    #elif float(r.get(user)) < 30 :
-        #await interaction.response.send_message("first you need to sell your Qnt")
