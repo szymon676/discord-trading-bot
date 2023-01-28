@@ -18,5 +18,5 @@ async def get_balance(interaction:discord.Interaction):
 
     await interaction.response.send_message(f"now you have {str(money)}$ and {str(qnt)} qnt ")  
     
-    if r.hget(user) == None:
+    if r.hget(user,"money") == None:
         await interaction.response.send_message("your account is clear")

@@ -11,7 +11,7 @@ client = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 @client.tree.command(name="sell_q",description="sell your quant")
-async def sell_q(interaction: discord.Interaction,quantity):
+async def sell_q(interaction: discord.Interaction,quantity:float):
     
     qnt_data = yf.download(tickers='QNT-USD', period='10m', interval='15m')
     info_raw = str(qnt_data).split()
@@ -19,20 +19,25 @@ async def sell_q(interaction: discord.Interaction,quantity):
 
     user = interaction.user.id
 
-    if r.hget(user) == None :
+
+    if r.hget(user,"quant") == None :
 
         await interaction.response.send_message("first you need to buy quant")
 
-    elif quantity > r.hget(user,"quant"):
+
+
+    elif quantity > float(r.hget(user,"quant")):
         await interaction.response.send_message("you don't have enough quant")
+
 
     elif float(r.hget(user,"quant")) > 0:
         
         
         cash = quantity * price 
-
-        r.hincrby(user,"quant",-quantity)
-        r.hincrby(user,"money",cash)
+        money = r.hget(user,"money")
+        quantity
+        r.hincrbyfloat(user,"quant",-quantity)
+        r.hincrbyfloat(user,"money",cash)
 
         await interaction.response.send_message("you sold " + str(quantity) + "quant")
-        await interaction.response.send_message("now you have " + str(r.hget(user,"money") + "$"))
+        await interaction.response.send_message("now you have " + str(money) + "$")

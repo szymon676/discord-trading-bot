@@ -23,24 +23,23 @@ async def buy_q(interaction: discord.Interaction,cash:int):
 
 
 
-    if r.hget(user) == None:
+    if r.hget(user,"money") == None:
 
-        r.hset(user,"quant",qnt,"money",500-cash)
+        total = 500-cash
+        r.hmset(user,{"quant":qnt,"money":total})
         await interaction.response.send_message("you bought " + str(qnt))
         await interaction.response.send_message("now you have " + str(r.hget(user,"money") + "$"))
         
 
-    elif float(r.hget(user,"money")) == 0 or cash > r.hget(user,"money") :
+    elif float(r.hget(user,"money")) == 0 or float(cash) > float(r.hget(user,"money")) :
 
         await interaction.response.send_message("you don't have enough money")
 
 
     elif float(r.hget(user,"money")) > 0:
     
-        r.hincrby(user,"quant",qnt)
-        r.hincrby(user,"money",-cash)
+        r.hincrbyfloat(user,"quant",qnt)
+        r.hincrbyfloat(user,"money",-float(cash))
 
-        await interaction.response.send_message("you bought " + str(qnt))
+        await interaction.response.send_message("you bought " + str(qnt) + "qnt")
         await interaction.response.send_message("now you have " + str(r.hget(user,"money") + "$"))
-
-        
